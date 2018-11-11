@@ -46,14 +46,14 @@ module.exports = (apiKey) => {
         return url
     }
 
-    const search = (term, options) => {
+    const search = (term, options = {}) => {
         // Build URL
         let url = CreateUrl(term, 0, options)
         // Return http response
         return HttpGet(url)
     }
 
-    const get = (term, options) => {
+    const get = (term, options = {}) => {
         // Build URL
         let url = CreateUrl(term, 1, options)
         // Return http response

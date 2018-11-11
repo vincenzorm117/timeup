@@ -24,6 +24,7 @@ module.exports = () => {
 
 
 	var authenticate = async (req, res, next) => {
+        next();
 		// Get token from header
 		let token = req.get('Authorization');
 		// Check token with google
