@@ -1,13 +1,7 @@
 
 
-module.exports = function(mongoose) {
-
+module.exports = (mongoose) => {
     return {
         ScreenPlay: require('./ScreenPlay')(mongoose)
     }
 }
-
-
-
-
-

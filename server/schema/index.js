@@ -1,14 +1,30 @@
-const { GraphQLSchema, GraphQLObjectType } = require('graphql')
+const fs = require('fs')
+const graphqlHTTP = require('express-graphql')
+const { buildSchema } = require('graphql')
+const { resolve } = require('path')
 
-const screenplay = require('./queries/screenplay')
-const screenplays = require('./queries/screenplays')
+var graphqlSchemaString = fs.readFileSync(resolve(__dirname, './index.graphql')).toString();
+const schema = buildSchema(graphqlSchemaString)
 
-module.exports = new GraphQLSchema({
-    query: new GraphQLObjectType({
-        name: 'Rootquery',
-        fields: () => ({
-            ...screenplay,
-            ...screenplays,
-        })
+
+// Load graphql functions
+const root = ({ ScreenPlay }) => {
+    return {
+        screenplay: async ({ id }) => {
+            return ScreenPlay.findOne({ imdbID: id })
+        },
+        search: async ({ searchTerm }) => {
+            let regex = new RegExp(searchTerm, "i")
+            if (searchTerm !== '') return ScreenPlay.find({ Title: regex })
+            else return ScreenPlay.find()
+        }
+    }
+}
+
+module.exports = (mongoose) => {
+    return graphqlHTTP({
+        schema: schema,
+        rootValue: root(mongoose.models),
+        graphiql: true
     })
-});
+}

@@ -9,9 +9,8 @@ const session = require('express-session')
 const cors = require('cors')
 const path = require('path')
 const mongoose = require('mongoose')
-const graphqlHTTP = require('express-graphql')
+
 // 1st party libraries
-const schema = require('./server/schema')
 const auth = require('./server/auth')()
 const api = require('./server/api')()
 const ScreenPlayQueue = require('./server/lib/ScreenPlayQueue')
@@ -22,6 +21,7 @@ let { ScreenPlay } = mongoose.models
 // Load libraries
 const omdb = require('./server/lib/omdb')(process.env.OMDB_API_KEY)
 const queue = new ScreenPlayQueue({ listID: 'TimeUpScreenPlayQueue' })
+const graphqlRouter = require('./server/schema')(mongoose)
 const app = express()
 
 // Setup expressjs middleware
@@ -65,11 +65,7 @@ queue.initQueuePolling(async (error, imdbID) => {
 app.use('/', express.static(path.join(__dirname, 'app/')));
 app.use('/auth', auth.router)
 app.use('/api', api.router)
-
-app.use('/graphql', graphqlHTTP({
-    schema: schema,
-    graphiql: true
-}));
+app.use('/graphql', graphqlRouter);
 
 
 // Setup basic endpoints
