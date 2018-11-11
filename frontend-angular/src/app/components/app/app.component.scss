@@ -4,9 +4,24 @@ mat-form-field {
     display: block;
 }
 
+.search-bar {
+    padding: 24px !important;
+}
 .tu-form {
     display: flex;
     flex-flow: row nowrap;
+    > * {
+        display: block;
+    }
+    input {
+        border:none;
+        outline: none;
+        width:100%;
+    }
+    button {
+        width: 130px;
+        font-size: 16px;
+    }
 }
 
 .movie-card {
@@ -44,4 +59,8 @@ mat-card-title {
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 16px !important;
+}
+
+.btn-search {
+    font-family: 'Google Sans';
 }
