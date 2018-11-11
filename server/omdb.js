@@ -1,6 +1,6 @@
 
 const { HttpGet } = require('./common');
-const { isEmpty, isString, isInteger } = require('lodash')
+const { isEmpty, isString, isInteger, isPlainObject } = require('lodash')
 
 module.exports = (apiKey) => {
     if( !(/[a-z0-9]{8}/i).test(apiKey) ) {
@@ -13,14 +13,14 @@ module.exports = (apiKey) => {
     const types = ['movie','series','episode']
     const plotTypes = ['short','full']
 
-    const CreateUrl = (term, type, { type, year, page, plot }) => {
+    const CreateUrl = (term, termType, { type, year, page, plot } = {}) => {
         if( !isString(term) || isEmpty(term) ) {
             throw new Error('Invalid term. First argument, term, must be a non empty string.')
         }
-        if( type != 1 && type != 0 ) {
+        if( termType != 1 && termType != 0 ) {
             throw new Error('Invalid type. Second argument, type, must be 1 or 0.')
         }
-        let typeSymbol = type == 0 ? 's' : (/^tt.*$/.test(term) ? 'i' : 't');
+        let typeSymbol = termType == 0 ? 's' : (/^tt.*$/.test(term) ? 'i' : 't');
         term = encodeURIComponent(term)
 
         let url = `${dataBaseURL}&${typeSymbol}=${term}`
@@ -46,18 +46,18 @@ module.exports = (apiKey) => {
         return url
     }
 
-    const search = async (term, options) => {
+    const search = (term, options) => {
         // Build URL
         let url = CreateUrl(term, 0, options)
         // Return http response
-        return await HttpGet(url)
+        return HttpGet(url)
     }
 
-    const get = async (term, options) => {
+    const get = (term, options) => {
         // Build URL
         let url = CreateUrl(term, 1, options)
         // Return http response
-        return await HttpGet(url)
+        return HttpGet(url)
     }
 
     return { search, get }
