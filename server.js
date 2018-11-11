@@ -12,6 +12,7 @@ const mongoose = require('mongoose')
 // const graphqlHTTP = require('express-graphql')
 // const schema = require('./server/schema')
 const auth = require('./server/auth')()
+const api = require('./server/api')()
 
 const app = express()
 
@@ -35,6 +36,7 @@ app.use(session({
 
 app.use('/', express.static(path.join(__dirname, 'app/')));
 app.use('/auth', auth.router)
+app.use('/api', api.router)
 
 // app.use('/graphql', graphqlHTTP({
 //     schema: schema,

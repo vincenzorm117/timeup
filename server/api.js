@@ -1,0 +1,39 @@
+
+const express = require('express')
+const omdb = require('./omdb')(process.env.OMDB_API_KEY)
+
+// Initialize router
+const router = express.Router()
+
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+// Module exports
+
+module.exports = () => {
+    
+	router.get('/movie', async (req, res) => {
+        try{
+            let movies = await omdb.search(req.query.s)
+            console.log(movies)
+            res.status(200).json(movies.Search)
+        } catch(_) {
+            res.status(500).send()
+        }
+	});
+
+
+	return { router }
+}
+
+
+
+
+
+
+
+
+
+
