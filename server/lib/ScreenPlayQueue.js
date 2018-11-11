@@ -2,7 +2,7 @@
 const redis = require('redis')
 const { isInteger } = require('lodash')
 
-class MovieQueue {
+class ScreenPlayQueue {
 
     constructor({ port, host, cb, time } = {}) {
         this.client = redis.createClient()
@@ -11,9 +11,9 @@ class MovieQueue {
         this.mode = true;
     }
 
-    pushMovies(movies) {
-        movies = movies.map(movie => movie.imdbID)
-        this.client.rpush(this.listID, ...movies)
+    pushScreenPlays(screenplays) {
+        screenplays = screenplays.map(screenplay => screenplay.imdbID)
+        this.client.rpush(this.listID, ...screenplays)
         this.mode = true;
     }
 
@@ -33,4 +33,4 @@ class MovieQueue {
 }
 
 
-module.exports = MovieQueue;
+module.exports = ScreenPlayQueue;

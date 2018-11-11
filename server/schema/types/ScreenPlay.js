@@ -2,9 +2,9 @@ const { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLList, GraphQLInputO
 
 
 module.exports = {
-    Movie: new GraphQLObjectType({
-        name: "Movie",
-        description: "All details of a movie",
+    ScreenPlay: new GraphQLObjectType({
+        name: "ScreenPlay",
+        description: "All details of a ScreenPlay",
         fields: {
             imdbID: { type: GraphQLString },
             Title: { type: GraphQLString },
@@ -29,8 +29,8 @@ module.exports = {
             Response: { type: GraphQLString },
         }
     }),
-    MovieInputType: new GraphQLInputObjectType({
-        name: 'MovieInput',
+    ScreenPlayInputType: new GraphQLInputObjectType({
+        name: 'ScreenPlayInput',
         fields: {
             imdbID: { type: GraphQLString }, 
             Title: { type: GraphQLString },

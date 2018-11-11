@@ -32,7 +32,7 @@ module.exports = function(mongoose) {
     });
     
 
-	return mongoose.model('Movie', schema);
+	return mongoose.model('ScreenPlay', schema);
 }
 
 

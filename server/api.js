@@ -13,11 +13,11 @@ const router = express.Router()
 
 module.exports = () => {
     
-	router.get('/movie', async ({ query, movieQueue, omdb }, res) => {
+	router.get('/movie', async ({ query, spQueue, omdb }, res) => {
         try{
-            let movies = await omdb.search(query.s)
-            movieQueue.pushMovies(movies.Search)
-            res.status(200).json(movies.Search)
+            let screenPlays = await omdb.search(query.s)
+            spQueue.pushScreenPlays(screenPlays.Search)
+            res.status(200).json(screenPlays.Search)
         } catch(_) {
             res.status(500).send()
         }

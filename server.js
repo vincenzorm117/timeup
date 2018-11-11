@@ -14,14 +14,14 @@ const graphqlHTTP = require('express-graphql')
 const schema = require('./server/schema')
 const auth = require('./server/auth')()
 const api = require('./server/api')()
-const MovieQueue = require('./server/lib/MovieQueue')
+const ScreenPlayQueue = require('./server/lib/ScreenPlayQueue')
 
 // Load mongoose models
 require('./server/models')(mongoose)
-let { Movie } = mongoose.models
+let { ScreenPlay } = mongoose.models
 // Load libraries
 const omdb = require('./server/lib/omdb')(process.env.OMDB_API_KEY)
-const queue = new MovieQueue({ listID: 'TimeUpMovieQueue' })
+const queue = new ScreenPlayQueue({ listID: 'TimeUpScreenPlayQueue' })
 const app = express()
 
 // Setup expressjs middleware
@@ -43,22 +43,22 @@ app.use(session({
 
 app.use((req, res, next) => {
     req.omdb = omdb;
-    req.movieQueue = queue;
+    req.spQueue = queue;
     next();
 })
 
 queue.initQueuePolling(async (error, imdbID) => {
     // Check if movie exists
-    let movieCount = await Movie.countDocuments({ imdbID })
+    let movieCount = await ScreenPlay.countDocuments({ imdbID })
     if( 0 < movieCount ) {
         return
     }
     // Create movie in database
-    let omdbMovie = await omdb.get(imdbID)
-    let movie = new Movie(omdbMovie)
-    movie.save()
+    let omdbScreenPlay = await omdb.get(imdbID)
+    let screenplay = new ScreenPlay(omdbScreenPlay)
+    screenplay.save()
     // Add move runtime string
-    queue.client.sadd('TimeUpRunTimes', omdbMovie.Runtime)
+    queue.client.sadd('TimeUpRunTimes', omdbScreenPlay.Runtime)
 })
 
 
