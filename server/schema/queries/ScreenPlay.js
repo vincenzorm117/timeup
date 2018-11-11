@@ -1,10 +1,10 @@
 const { GraphQLNonNull, GraphQLString }  = require('graphql')
-const { Movie } = require('../types/ScreenPlay')
+const { ScreenPlay } = require('../types/ScreenPlay')
 
 
 module.exports = {
     movie: {
-        type: Movie,
+        type: ScreenPlay,
         description: "Get details of a single screenplay",
         args: {
             id: { type: new GraphQLNonNull(GraphQLString) }
