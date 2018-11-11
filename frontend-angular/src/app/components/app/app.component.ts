@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StateService } from 'src/app/services/state.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'angular-frontend';
+    value = ''
+    movies: object[] = []
+
+    constructor(private state: StateService) {}
+
+
+    async searchMovie() {
+        if( this.value.length < 3 ) {
+            return;
+        }
+        this.movies = await this.state.setSearchTerm(this.value)
+        console.log(this.movies)
+    }
 }
