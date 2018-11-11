@@ -1,9 +1,9 @@
 const { GraphQLNonNull, GraphQLString, GraphQLList }  = require('graphql')
-const { ScreenPlay } = require('../types/ScreenPlay')
+const { ScreenPlay } = require('../types/screenplay')
 
 
 module.exports = {
-    movies: {
+    screenplays: {
         type: new GraphQLList(ScreenPlay),
         description: "Get a list of movies",
         args: {

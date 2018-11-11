@@ -1,17 +1,20 @@
 const { GraphQLNonNull, GraphQLString }  = require('graphql')
-const { ScreenPlay } = require('../types/ScreenPlay')
+const { ScreenPlay } = require('../types/screenplay')
 
 
 module.exports = {
-    movie: {
+    screenplay: {
         type: ScreenPlay,
         description: "Get details of a single screenplay",
         args: {
             id: { type: new GraphQLNonNull(GraphQLString) }
         },
         resolve:  (parent, {id}) => {
+            debugger
 
-
+            return {
+                Title: 'Funnyman'
+            }
             // return fakeDatabase.getBlogPost(id);
         }
     }
