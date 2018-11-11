@@ -1,15 +1,14 @@
 
 
 module.exports = (mongoose) => {
-	const Schema = mongoose.Schema;
+    const Schema = mongoose.Schema;
 
-	var schema = new Schema({
+    var schema = new Schema({
         imdbID: String,
         Title: String,
         Year: String,
         Rated: String,
         Released: String,
-        Runtime: String,
         Genre: String,
         Director: String,
         Writer: String,
@@ -25,13 +24,29 @@ module.exports = (mongoose) => {
         Type: String,
         totalSeasons: String,
         Response: String,
-        date_created: { 
-			type: Date, 
-			default: Date.now 
+        Runtime: String,
+        RuntimeMinutes: Number,
+        date_created: {
+            type: Date,
+            default: Date.now
         },
     });
 
-	return mongoose.model('ScreenPlay', schema);
+    schema.pre('save', function (next) {
+        let runtime = 0
+        let matches = this.Runtime.match(/(\d+)\s*min/i)
+        if (Array.isArray(matches) || matches.length == 2) {
+            runtime = parseInt(matches[1])
+            if (isNaN(runtime)) {
+                runtime = 0
+            }
+        }
+        this.RuntimeMinutes = runtime
+        // do stuff
+        next();
+    });
+
+    return mongoose.model('ScreenPlay', schema);
 }
 
 
