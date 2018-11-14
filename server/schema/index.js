@@ -8,23 +8,24 @@ const schema = buildSchema(graphqlSchemaString)
 
 
 // Load graphql functions
-const root = ({ ScreenPlay }) => {
+const root = ({ mongoose: { models: { ScreenPlay }}, omdb, queue }) => {
+
     return {
         screenplay: async ({ id }) => {
             return ScreenPlay.findOne({ imdbID: id })
         },
         search: async ({ searchTerm }) => {
-            let regex = new RegExp(searchTerm, "i")
-            if (searchTerm !== '') return ScreenPlay.find({ Title: regex })
-            else return ScreenPlay.find()
+            let { Search } = await omdb.search(searchTerm)
+            queue.pushScreenPlays(Search)
+            return Search
         }
     }
 }
 
-module.exports = (mongoose) => {
+module.exports = (options) => {
     return graphqlHTTP({
         schema: schema,
-        rootValue: root(mongoose.models),
+        rootValue: root(options),
         graphiql: true
     })
 }
