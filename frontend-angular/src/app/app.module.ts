@@ -11,10 +11,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 
+import { ApolloModule, Apollo } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { StateService } from './services/state.service';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 @NgModule({
     declarations: [
@@ -31,8 +34,17 @@ import { StateService } from './services/state.service';
         MatToolbarModule,
         MatButtonModule,
         HttpClientModule,
+        ApolloModule,
+        HttpLinkModule,
     ],
     providers: [StateService],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+    constructor(apollo: Apollo, httpLink: HttpLink) {
+        apollo.create({
+            link: httpLink.create({ uri: '/graphql' }),
+            cache: new InMemoryCache()
+        });
+      }
+}

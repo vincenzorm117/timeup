@@ -1,23 +1,32 @@
-<mat-toolbar>TimeUp</mat-toolbar>
+<mat-toolbar>
+    <h1>TimeUp</h1>
+</mat-toolbar>
 <div class="container pt-5">
-    <mat-card>
-        <mat-form-field class="pl-3 pr-3">
-            <div class="tu-form">
-                <input matInput type="text" placeholder="Movie name..." [(ngModel)]="value" (keyup.enter)="searchMovie()">
-                <button mat-flat-button color="accent" (click)="searchMovie()">Search</button>
-            </div>
-        </mat-form-field>
+    <h1 class="tu-time">
+        <span *ngIf="0 < time.years">{{time.years}} <span class="label">yrs</span></span>
+        <span *ngIf="0 < time.months">{{time.months}}  <span class="label">mths</span></span>
+        <span *ngIf="0 < time.days">{{time.days}}  <span class="label">days</span></span>
+        <span *ngIf="0 < time.hours">{{time.hours}} <span class="label">hrs</span></span>
+        <span *ngIf="0 < time.minutes">{{time.minutes}}  <span class="label">min</span></span>
+    </h1>
+    <mat-card class="search-bar">
+        <div class="tu-form">
+            <input matInput type="text" placeholder="Movie name..." [(ngModel)]="searchTerm" (keyup.enter)="searchMovies()">
+            <button class="btn-search" mat-icon-button color="accent" (click)="searchMovies()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </div>
     </mat-card>
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-3 movie-card" *ngFor="let movie of movies">
-                <mat-card class="example-card">
+            <div class="col-md-3 movie-card" *ngFor="let screenplay of screenplays">
+                <mat-card class="example-card" (click)="getScreenPlay(screenplay)">
                     <mat-card-header>
-                        <mat-card-title>{{movie.Title}}</mat-card-title>
-                        <mat-card-subtitle>{{movie.Year}}</mat-card-subtitle>
+                        <mat-card-title>{{screenplay.Title}}</mat-card-title>
+                        <mat-card-subtitle>{{screenplay.Year}}</mat-card-subtitle>
                     </mat-card-header>
                     <div class="image">
-                        <img mat-card-image src="{{movie.Poster}}">
+                        <img mat-card-image src="{{screenplay.Poster}}">
                     </div>
                 </mat-card>
             </div>
