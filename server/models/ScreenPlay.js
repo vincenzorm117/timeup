@@ -35,7 +35,7 @@ module.exports = (mongoose) => {
     schema.pre('save', function (next) {
         let runtime = 0
         let matches = this.Runtime.match(/(\d+)\s*min/i)
-        if (Array.isArray(matches) || matches.length == 2) {
+        if (Array.isArray(matches) && matches.length == 2) {
             runtime = parseInt(matches[1])
             if (isNaN(runtime)) {
                 runtime = 0
