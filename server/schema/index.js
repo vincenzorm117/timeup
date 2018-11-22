@@ -12,7 +12,13 @@ const root = ({ mongoose: { models: { ScreenPlay }}, omdb, queue }) => {
 
     return {
         screenplay: async ({ id }) => {
-            return ScreenPlay.findOne({ imdbID: id })
+            let screenplay = await ScreenPlay.findOne({ imdbID: id });
+            if( screenplay != null ) {
+                return screenplay
+            }
+            let omdbScreenPlay = await omdb.get(id)
+            screenplay = new ScreenPlay(omdbScreenPlay)
+            return screenplay.save();
         },
         search: async ({ searchTerm }) => {
             let { Search } = await omdb.search(searchTerm)
