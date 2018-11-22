@@ -74,7 +74,9 @@ export class AppComponent {
             return;
         }
         this.watchedScreenplaysSet.add(screenplay.imdbID);
-        this.totalWatchTime += screenplay.RuntimeMinutes;
+        if( !isNaN(screenplay.RuntimeMinutes) ) {
+            this.totalWatchTime += screenplay.RuntimeMinutes;
+        }
         this.time.setTimeMinutes(this.totalWatchTime);
         this.watchedScreenplays.push(screenplay);
         localStorage.setItem('tu-watched-movies', JSON.stringify(this.watchedScreenplays));
