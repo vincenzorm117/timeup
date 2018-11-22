@@ -11,7 +11,7 @@
     </h1>
     <mat-card class="search-bar">
         <div class="tu-form">
-            <input matInput type="text" placeholder="Movie name..." [(ngModel)]="searchTerm" (keyup.enter)="searchMovies()">
+            <input matInput type="text" placeholder="Movie name..." [(ngModel)]="searchTerm" (keyup)="searchMovies()">
             <button class="btn-search" mat-icon-button color="accent" (click)="searchMovies()">
                 <mat-icon>search</mat-icon>
             </button>
@@ -20,10 +20,10 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-3 movie-card" *ngFor="let screenplay of screenplays">
-                <mat-card class="example-card" (click)="getScreenPlay(screenplay)">
+                <mat-card class="example-card" (click)="addScreenPlayComponent(screenplay)">
                     <mat-card-header>
-                        <mat-card-title>{{screenplay.Title}}</mat-card-title>
-                        <mat-card-subtitle>{{screenplay.Year}}</mat-card-subtitle>
+                        <mat-card-title title="{{screenplay.Title}}">{{screenplay.Title}}</mat-card-title>
+                        <mat-card-subtitle>{{screenplay.Year}} </mat-card-subtitle>
                     </mat-card-header>
                     <div class="image">
                         <img mat-card-image src="{{screenplay.Poster}}">
@@ -32,13 +32,16 @@
             </div>
         </div>
     </div>
-    <div class="container mt-5">
+    <div class="container mt-5 ">
+        <h2 class="text-center">Watched Movies</h2>
+    </div> 
+    <div class="container mt-4">
         <div class="row">
-            <div class="col-xs-12 col-md-3" *ngFor="let screenplay of watchedScreenplays">
+            <div class="col-xs-12 col-md-3 movie-card" *ngFor="let screenplay of watchedScreenplays">
                 <mat-card class="example-card">
                     <mat-card-header>
-                        <mat-card-title>{{screenplay.Title}}</mat-card-title>
-                        <mat-card-subtitle>{{screenplay.Year}}</mat-card-subtitle>
+                        <mat-card-title title="{{screenplay.Title}}">{{screenplay.Title}}</mat-card-title>
+                        <mat-card-subtitle>{{screenplay.Year}} </mat-card-subtitle>
                     </mat-card-header>
                     <div class="image">
                         <img mat-card-image src="{{screenplay.Poster}}">

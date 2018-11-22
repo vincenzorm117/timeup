@@ -49,8 +49,7 @@ mat-form-field {
     cursor: pointer;
     // padding: 24px;
     .image {
-        padding-bottom: 180%;
-        // width: calc(100% + 32px); 
+        padding-bottom: 150%;
         width:100%;
         margin: 0;
         position: relative;
@@ -87,8 +86,13 @@ mat-card-title {
 }
 
 mat-card-header {
-    padding: 16px;
+    padding: 16px 16px 0;
 }
+
+mat-card-subtitle {
+    height: 21px;
+}
+
 .mat-card-header-text {
     margin: 0;
 }

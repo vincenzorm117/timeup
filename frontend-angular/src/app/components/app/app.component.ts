@@ -13,7 +13,7 @@ import Time from 'src/app/classes/time';
 export class AppComponent {
     
     searchTerm: string = '';
-    screenplays: object[] = []
+    screenplays: ScreenPlay[] = []
     
     watchedScreenplaysSet = new Set();
     watchedScreenplays: ScreenPlay[] = [];
@@ -35,6 +35,7 @@ export class AppComponent {
 
     async searchMovies() {
         if( this.searchTerm.length < 3 ) {
+            this.screenplays = [];
             return;
         }
         let variables = { searchTerm: this.searchTerm }
@@ -42,6 +43,7 @@ export class AppComponent {
         try {
             var result = await this.apollo.query({ query: gqlSearchQuery, variables }).toPromise()
             this.screenplays = result.data['search'];
+            this.screenplays = this.screenplays.filter(s => !this.watchedScreenplaysSet.has(s.imdbID))
         } catch(_) { 
             console.error(_)
             // TODO: Handle error
@@ -59,6 +61,11 @@ export class AppComponent {
             console.error(_)
             // TODO: Handle error
         }
+    }
+
+    addScreenPlayComponent(screenplay: ScreenPlay) {
+        this.screenplays = this.screenplays.filter(s => s != screenplay);
+        this.addScreenPlay(screenplay);
     }
 
     async addScreenPlay(screenplay: ScreenPlay) {
