@@ -1,4 +1,16 @@
 
+@import '../../../styles/mixins.scss';
+
+
+$colors1: #007bff, #6610f2, #6f42c1, #e83e8c, #dc3545, #fd7e14, #ffc107, #28a745, #20c997, #17a2b8, #6c757d, #343a40, #007bff, #6c757d, #28a745, #17a2b8, #ffc107, #dc3545, #f8f9fa;
+$colors2: #dc3545, #fd7e14, #ffc107, #28a745, #17a2b8, #ffc107, #dc3545, #f8f9fa, #20c997, #17a2b8, #007bff, #6610f2, #6f42c1, #e83e8c, #6c757d, #343a40, #007bff, #6c757d, #28a745;
+$colors3: #20c997, #17a2b8, #6c757d, #343a40, #007bff, #6c757d, #28a745, #17a2b8, #ffc107, #dc3545, #f8f9fa, #007bff, #6610f2, #6f42c1, #e83e8c, #dc3545, #fd7e14, #ffc107, #28a745; 
+
+@include colorTransitions($colors1, color, TextRainbow1);
+@include colorTransitions($colors2, color, TextRainbow2);
+@include colorTransitions($colors3, color, TextRainbow3);
+
+
 mat-toolbar {
     display: flex;
     justify-content: space-between;
@@ -20,9 +32,12 @@ mat-toolbar {
     .label {
         padding-left: 4px;
         font-variant: small-caps;
-        font-size: 0.9em;
+        font-size: 0.8em;
         color: #9e9e9e;
     }
+    > span:nth-child(1) .label { animation: TextRainbow1 16000ms linear infinite; }
+    > span:nth-child(2) .label { animation: TextRainbow2 16000ms linear infinite; }
+    > span:nth-child(3) .label { animation: TextRainbow3 16000ms linear infinite; }
 }
 
 mat-form-field {
@@ -102,4 +117,23 @@ mat-card-subtitle {
 
 .btn-search {
     font-family: 'Google Sans';
+}
+
+[view="grid"] {
+    .movie-cards {
+        margin: 0;
+    }
+    .movie-card {
+        padding: 0;
+        width: calc(100% / 12);
+        max-width: calc(100% / 12);
+        flex: auto;
+    }
+    mat-card {
+        border-radius: 0;
+        margin: 0;
+    }
+    mat-card-header {
+        display: none;
+    }
 }

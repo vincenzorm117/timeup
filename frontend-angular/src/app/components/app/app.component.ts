@@ -19,6 +19,8 @@ export class AppComponent {
     watchedScreenplays: ScreenPlay[] = [];
     totalWatchTime = 0
     time = new Time(0);
+    htmlAttrView = 0;
+    htmlAttrViewOptions = ['grid','micro'];
 
     constructor(private state: StateService, private apollo: Apollo) {
         let runtime = parseInt(localStorage.getItem('tu-runtime'))
@@ -91,5 +93,9 @@ export class AppComponent {
         localStorage.setItem('tu-watched-movies', JSON.stringify(this.watchedScreenplays));
         localStorage.setItem('tu-runtime', JSON.stringify(this.totalWatchTime));
         this.time.setTimeMinutes(this.totalWatchTime);
+    }
+
+    toggleViewType() {
+        this.htmlAttrView = (this.htmlAttrView + 1) % this.htmlAttrViewOptions.length;
     }
 }

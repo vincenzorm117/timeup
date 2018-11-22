@@ -1,0 +1,17 @@
+
+
+
+
+@mixin colorTransitions($colors, $property, $animationName) {
+    $portion: 100/length($colors);
+    @keyframes #{$animationName} {
+        0% {
+            #{$property}: nth($colors, length($colors))
+        }
+        @for $i from 1 through length($colors) {
+            #{$portion*$i}% {
+                #{$property}: nth($colors, $i)
+            }
+        }
+    }
+}
