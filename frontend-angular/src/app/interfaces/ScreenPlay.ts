@@ -25,3 +25,11 @@ export interface ScreenPlay {
     RuntimeMinutes: number,
     date_created: Date
 }
+
+export const ScreenPlayEqual = (a: ScreenPlay, b: ScreenPlay) => {
+    try {
+        return a.imdbID == b.imdbID;
+    } catch(_) {
+        return false;
+    }
+}

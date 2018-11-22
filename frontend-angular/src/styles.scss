@@ -4,3 +4,8 @@
 @import './styles/fonts-google.scss';
 @import './styles/bootstrap/bootstrap.scss';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+button {
+    outline: 0 !important;
+}

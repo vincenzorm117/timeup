@@ -20,7 +20,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-3 movie-card" *ngFor="let screenplay of screenplays">
-                <mat-card class="example-card" (click)="addScreenPlayComponent(screenplay)">
+                <mat-card class="example-card" (click)="getScreenPlay(screenplay)">
                     <mat-card-header>
                         <mat-card-title title="{{screenplay.Title}}">{{screenplay.Title}}</mat-card-title>
                         <mat-card-subtitle>{{screenplay.Year}} </mat-card-subtitle>
@@ -32,22 +32,40 @@
             </div>
         </div>
     </div>
-    <div class="container mt-5 ">
-        <h2 class="text-center">Watched Movies</h2>
-    </div> 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-xs-12 col-md-3 movie-card" *ngFor="let screenplay of watchedScreenplays">
-                <mat-card class="example-card">
-                    <mat-card-header>
-                        <mat-card-title title="{{screenplay.Title}}">{{screenplay.Title}}</mat-card-title>
-                        <mat-card-subtitle>{{screenplay.Year}} </mat-card-subtitle>
-                    </mat-card-header>
-                    <div class="image">
-                        <img mat-card-image src="{{screenplay.Poster}}">
-                    </div>
-                </mat-card>
+    <ng-container *ngIf="watchedScreenplays && 0 < watchedScreenplays.length; else noWatchedMovies">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 text-center">
+                    <h2>Watched Movies</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-3 movie-card" *ngFor="let screenplay of watchedScreenplays">
+                    <mat-card class="example-card">
+                        <mat-card-header>
+                            <mat-card-title title="{{screenplay.Title}}">{{screenplay.Title}}</mat-card-title>
+                            <mat-card-subtitle>{{screenplay.Year}} </mat-card-subtitle>
+                        </mat-card-header>
+                        <div class="image">
+                            <img mat-card-image src="{{screenplay.Poster}}">
+                        </div>
+                    </mat-card>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="container mt-5 mb-5">
+            <h2 class="text-center">
+                <button mat-button (click)="reset()">Reset</button>
+            </h2>
+        </div>
+    </ng-container>
+    <ng-template #noWatchedMovies>
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-xs-12 col-md-12 text-center">
+                    <h2>No Watched Movies</h2>
+                </div>
+            </div>
+        </div>
+    </ng-template>
 </div>

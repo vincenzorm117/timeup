@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { StateService } from 'src/app/services/state.service';
-import { ScreenPlay } from 'src/app/interfaces/ScreenPlay';
+import { ScreenPlay, ScreenPlayEqual } from 'src/app/interfaces/ScreenPlay';
 import { Apollo } from 'apollo-angular';
 import { gqlSearchQuery, gqlGetScreenPlayQuery } from '../../../graphql';
 import Time from 'src/app/classes/time';
@@ -45,7 +45,7 @@ export class AppComponent {
             this.screenplays = result.data['search'];
             this.screenplays = this.screenplays.filter(s => !this.watchedScreenplaysSet.has(s.imdbID))
         } catch(_) { 
-            console.error(_)
+            console.warn(_)
             // TODO: Handle error
         }
     }
@@ -54,18 +54,16 @@ export class AppComponent {
         let variables = { id: screenplay.imdbID }
 
         try {
-            let result = await this.apollo.query({ query: gqlGetScreenPlayQuery, variables }).toPromise()
-            let screenplay = result['data']['screenplay'];
-            this.addScreenPlay(screenplay as ScreenPlay)
+            let result = await this.apollo.query({ fetchPolicy: 'network-only', query: gqlGetScreenPlayQuery, variables }).toPromise()
+            if( !result['data']['screenplay'] ) {
+                throw new Error('Screenplay error.')
+            }
+            this.screenplays = this.screenplays.filter(s => !ScreenPlayEqual(s, result['data']['screenplay']) );
+            this.addScreenPlay(result['data']['screenplay'] as ScreenPlay);
         } catch(_) {
-            console.error(_)
+            console.warn(_)
             // TODO: Handle error
         }
-    }
-
-    addScreenPlayComponent(screenplay: ScreenPlay) {
-        this.screenplays = this.screenplays.filter(s => s != screenplay);
-        this.addScreenPlay(screenplay);
     }
 
     async addScreenPlay(screenplay: ScreenPlay) {
@@ -81,5 +79,17 @@ export class AppComponent {
         this.watchedScreenplays.push(screenplay);
         localStorage.setItem('tu-watched-movies', JSON.stringify(this.watchedScreenplays));
         localStorage.setItem('tu-runtime', JSON.stringify(this.totalWatchTime));
+    }
+
+    reset() {
+        if( !confirm("Are you sure you wish to reset everything?") ) {
+            return;
+        }
+        this.watchedScreenplays = [];
+        this.totalWatchTime = 0;
+        this.watchedScreenplaysSet.clear();
+        localStorage.setItem('tu-watched-movies', JSON.stringify(this.watchedScreenplays));
+        localStorage.setItem('tu-runtime', JSON.stringify(this.totalWatchTime));
+        this.time.setTimeMinutes(this.totalWatchTime);
     }
 }
