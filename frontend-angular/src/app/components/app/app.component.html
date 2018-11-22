@@ -32,4 +32,19 @@
             </div>
         </div>
     </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-xs-12 col-md-3" *ngFor="let screenplay of watchedScreenplays">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                        <mat-card-title>{{screenplay.Title}}</mat-card-title>
+                        <mat-card-subtitle>{{screenplay.Year}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <div class="image">
+                        <img mat-card-image src="{{screenplay.Poster}}">
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>
 </div>

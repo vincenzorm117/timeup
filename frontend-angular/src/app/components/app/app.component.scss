@@ -7,6 +7,7 @@ mat-toolbar {
 }
 
 .tu-time {
+    font-size: 4.2em;
     display: flex;
     justify-content: center;
     align-items:center;
@@ -42,19 +43,16 @@ mat-form-field {
         outline: none;
         width:100%;
     }
-    button {
-        // width: 130px;
-        // font-size: 16px;
-    }
 }
 
 .movie-card {
     cursor: pointer;
-    padding: 24px;
+    // padding: 24px;
     .image {
         padding-bottom: 180%;
-        width: calc(100% + 32px); 
-        margin: 0 -16px 0 -16px;
+        // width: calc(100% + 32px); 
+        width:100%;
+        margin: 0;
         position: relative;
     }
     img {
@@ -72,7 +70,10 @@ mat-form-field {
 
 
 mat-card {
-    padding-bottom: 0;
+    padding: 0;
+    margin: 22px 0;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 mat-card-header,
@@ -83,6 +84,17 @@ mat-card-title {
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 16px !important;
+}
+
+mat-card-header {
+    padding: 16px;
+}
+.mat-card-header-text {
+    margin: 0;
+}
+.mat-card-image {
+    width: 100%;
+    margin: 0;
 }
 
 .btn-search {
