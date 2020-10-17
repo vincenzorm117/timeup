@@ -1,21 +1,21 @@
 exit
 
 
-USER=lukeskywalker
-PASS=d05e9276a97c227650cfaafbdf585ff3ed0bf54c
-GROUP=jedi
-ROOT_PASS=60f2d85848a55ba0b6e3218f54e557f26328d606
+USER=hansolo
+GROUP=civola
+PASS=f707ef195c46e85a9231886afbb8cf56f75f6a2e
+ROOT_PASS=e9b1a34208f2a8b0429ee57c47ec99e3f2aeae7e
 
 # NOTE: This is for Ubuntu 16.04.3 x64. There is a chance it might not work if the system isn't the same.
 
 # Setup password for root
-# password: 60f2d85848a55ba0b6e3218f54e557f26328d606
+# password: e9b1a34208f2a8b0429ee57c47ec99e3f2aeae7e
 passwd
 
 # Setup non-root admin user
 
 adduser $USER
-# password: 5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8
+# password: f707ef195c46e85a9231886afbb8cf56f75f6a2e
 # Generated with: echo -n "password" | openssl sha1
 usermod -aG sudo $USER
 
@@ -87,19 +87,19 @@ sudo systemctl status mongodb
 
 # Setup mongo user
 cat | mongo <<EOL
-use hoth;
+use tallonoverworld;
 db.createUser({ 
-    "user": "jarjar", 
-    "pwd": "191b42c3f046633dd56f4ab6266abae4237b55a8", 
+    "user": "benshape", 
+    "pwd": "454d18ee6a27574707a570f92f09383548d6f23c", 
     "roles": [{ 
-        "db": "tatooine", 
+        "db": "tallonoverworld", 
         "role": "readWrite"
     }]  
 });
 
 db.createUser({ 
-    user: "captainplanet", 
-    pwd: "ac4a1ce73339c4e8ec550c701675684a71c3f7d90eb19c78042ab6b47cc46a801987c92dcadfc585d0d8b8a46943f85461945b170bee7dc83d881bfa", 
+    user: "samus", 
+    pwd: "454d18ee6a27574707a570f92f09383548d6f23c9c78042ab6b47cc46a801987c92dcadfc585d0d8b8a46943f85461945b170bee7dc83d881bfa", 
     roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
 });
 EOL
@@ -107,7 +107,7 @@ EOL
 # Need mongo startup script like redis
 
 # Test mongo
-# mongo hoth -u jarjar -p 191b42c3f046633dd56f4ab6266abae4237b55a8
+# mongo tallonoverworld -u benshape -p 454d18ee6a27574707a570f92f09383548d6f23c
 
 
 
@@ -166,8 +166,8 @@ sudo adduser $USER $GROUP
 
 
 # Setup file permissions for file uploads
-cd /home/lukeskywalker/apps/fcfm-construction-tracking/server/public/
-chown -R lukeskywalker .
+cd /home/hansolo/apps/fcfm-construction-tracking/server/public/
+chown -R hansolo .
 
 
 
@@ -187,7 +187,7 @@ sudo ufw app list
 sudo ufw allow 'Nginx HTTP'
 sudo ufw status
 systemctl status nginx
-curl -i http://fcfmn.app
+curl -i http://timeup.app
 #######################################
 # Enable port 8020 for websocket connection
 sudo ufw allow 8020
@@ -203,7 +203,7 @@ sudo vi /etc/nginx/sites-available/default
 # Replace:
 # server_name _;
 # With:
-# server_name fcfmn.app;
+# server_name timeup.app;
 
 sudo nginx -t
 sudo systemctl reload nginx
@@ -212,11 +212,11 @@ sudo ufw status
 sudo ufw allow 'Nginx Full'
 sudo ufw delete allow 'Nginx HTTP'
 sudo ufw status
-sudo certbot --nginx -d fcfmn.app
+sudo certbot --nginx -d timeup.app
 # Pick option 2
 
 # For Dev server:
-# sudo certbot --nginx -d dev.fcfmn.app
+# sudo certbot --nginx -d dev.timeup.app
 
 sudo certbot renew --dry-run
 
@@ -255,4 +255,4 @@ apt install zip
 # 1. Start Cron
 # crontab -e
 # 2. Append to cron
-# 10 8 * * * cd /home/lukeskywalker/apps/fcfm-construction-tracking/; ./cron.sh
+# 10 8 * * * cd /home/hansolo/apps/fcfm-construction-tracking/; ./cron.sh

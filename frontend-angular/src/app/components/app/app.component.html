@@ -1,7 +1,4 @@
-<mat-toolbar>
-    <h1>TimeUp</h1>
-</mat-toolbar>
-<div class="container pt-5">
+<div class="container pt-5 mt-5">
     <h1 class="tu-time">
         <span *ngIf="0 < time.years">{{time.years}} <span class="label">yrs</span></span>
         <span *ngIf="0 < time.months">{{time.months}}  <span class="label">mths</span></span>
@@ -9,7 +6,7 @@
         <span *ngIf="0 < time.hours">{{time.hours}} <span class="label">hrs</span></span>
         <span *ngIf="0 < time.minutes">{{time.minutes}}  <span class="label">min</span></span>
     </h1>
-    <mat-card class="search-bar">
+    <mat-card class="search-bar mt-5">
         <div class="tu-form">
             <input matInput type="text" placeholder="Movie name..." [(ngModel)]="searchTerm" (keyup)="searchMovies()">
             <button class="btn-search" mat-icon-button color="accent" (click)="searchMovies()">
@@ -19,7 +16,7 @@
     </mat-card>
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-3 movie-card" *ngFor="let screenplay of screenplays">
+            <div class="col-md-4 movie-card" *ngFor="let screenplay of screenplays">
                 <mat-card class="example-card" (click)="getScreenPlay(screenplay)">
                     <mat-card-header>
                         <mat-card-title title="{{screenplay.Title}}">{{screenplay.Title}}</mat-card-title>
@@ -33,7 +30,7 @@
         </div>
     </div>
     <ng-container *ngIf="watchedScreenplays && 0 < watchedScreenplays.length; else noWatchedMovies">
-        <div class="container mt-4">
+        <div class="container mt-5">
             <div class="row">
                 <div class="col-xs-12 col-md-12 text-center">
                     <h2>Watched Movies</h2>
@@ -45,7 +42,7 @@
                 </div>
             </div>
             <div class="row movie-cards" [attr.view]="htmlAttrViewOptions[htmlAttrView]">
-                <div class="col-xs-12 col-md-3 movie-card" *ngFor="let screenplay of watchedScreenplays">
+                <div class="col-xs-12 col-md-4 movie-card" *ngFor="let screenplay of watchedScreenplays">
                     <mat-card class="example-card">
                         <mat-card-header>
                             <mat-card-title title="{{screenplay.Title}}">{{screenplay.Title}}</mat-card-title>

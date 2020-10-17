@@ -1,0 +1,15 @@
+stage.sh
+push_live.sh
+node_modules/
+.git/
+.env
+.stage_exclusions
+credentials.json
+token.json
+./admin/
+./frontend-angular/
+./scripts/
+server-configuration/
+
+
+server/public/media/
